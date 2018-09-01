@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
     console.log(JSON.stringify(projects));
 
     if(err){
-        console.log(JSON.stringify(err));
+        //console.log(JSON.stringify(err));
         res.json({code: 500, message: 'Something went wrong'});
     }else if (projects){
       res.json({code: 200, data: projects});
@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
 /* GET project by alias. */
 router.get('/:projectAlias', function(req, res, next) {
   Project.findOne({alias: req.params.projectAlias}, function(err, projects){
-    console.log(JSON.stringify(projects));
+    //console.log(JSON.stringify(projects));
 
     if(err){
         console.log(JSON.stringify(err));
@@ -81,7 +81,9 @@ router.post('/', function(req, res, next) {
 /* Create project. */
 router.put('/:projectAlias', function(req, res, next) {
   var pObject = req.body;
-
+  var projectAlias = req.params.projectAlias;
+  //console.log("putting :" + projectAlias);
+  
   Project.findOne({'alias': projectAlias}, function(err, project){
     if(err){
         callback(err, null);
