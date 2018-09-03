@@ -78,7 +78,7 @@ router.post('/', function(req, res, next) {
   });
 });
 
-/* Create project. */
+/* update project. */
 router.put('/:projectAlias', function(req, res, next) {
   var pObject = req.body;
   var projectAlias = req.params.projectAlias;
@@ -89,7 +89,7 @@ router.put('/:projectAlias', function(req, res, next) {
         callback(err, null);
     }else{
 
-        console.log(JSON.stringify(project));
+        //console.log(JSON.stringify(project));
         if(pObject.name){
             project.name = pObject.name;
         }
@@ -115,7 +115,7 @@ router.put('/:projectAlias', function(req, res, next) {
   });
 });
 
-/* Create project. */
+/* delete project. */
 router.delete('/:projectAlias', function(req, res, next) {
   Project.remove({'alias': req.params.projectAlias}, function(err, project){
     if(err){
