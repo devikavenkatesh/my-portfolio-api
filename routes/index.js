@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../model/userModel');
+var md5 = require('js-md5');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -61,4 +63,39 @@ router.post('/contact', function(req, res, next) {
   });
 
 });
+
+router.get('/signin', function(req, res, next) {
+  var pObject = req.body;
+  User.find({'email': pObject.email, 'password': pObject.password}, function(err, user){
+    if(err){
+      res.json({code: 500, message: 'Something went wrong in signin'});
+    }else{
+      res.json({code: 200, data: user}); 
+    }
+  });
+});
+
+router.post('/signup', function(req, res, next) {
+  // read the values from the body
+  // [ take the password and encrypt it ]
+  // use the model and save the data
+  console.log("signup");
+  console.log(req.body.name);
+  var userModel = new User();
+  userModel.name = req.body.name;
+  userModel.email = req.body.email;
+  userModel.password = md5(req.body.password);
+  userModel.createAt = new Date();
+  console.log("signing up");
+  userModel.save(function(err, user){
+  //console.log(JSON.stringify(user));
+  console.log(err);
+    if(err){
+      res.json({code: 500, message: 'Something went wrong in get signup'});
+    }else{
+      res.json({code: 200, data: user}); 
+    }
+  });
+});
+
 module.exports = router;
